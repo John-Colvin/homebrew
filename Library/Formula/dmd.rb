@@ -2,8 +2,8 @@ require "formula"
 
 class Dmd < Formula
   homepage "http://dlang.org"
-  url "https://github.com/D-Programming-Language/dmd/archive/v2.066.0.tar.gz"
-  sha1 "4ad09f680b249bb10b014b61ccb791a24f7a84c6"
+  url "https://github.com/D-Programming-Language/dmd/archive/v2.066.1.tar.gz"
+  sha1 "7be9737f97a494870446c881e185bec41f337792"
 
   bottle do
     sha1 "1cbca6f4f1b0d2af27ad6571c0b2f4b37b928423" => :mavericks
@@ -12,18 +12,18 @@ class Dmd < Formula
   end
 
   resource "druntime" do
-    url "https://github.com/D-Programming-Language/druntime/archive/v2.066.0.tar.gz"
-    sha1 "e1a5a29898127b4775a7b60c2534c3f4fc4387a9"
+    url "https://github.com/D-Programming-Language/druntime/archive/v2.066.1.tar.gz"
+    sha1 "614e2944c470944125ba6bc94a78c1cf0a41ad5a"
   end
 
   resource "phobos" do
-    url "https://github.com/D-Programming-Language/phobos/archive/v2.066.0.tar.gz"
-    sha1 "92385871df5883034055a20f8e8da5c398d11dd6"
+    url "https://github.com/D-Programming-Language/phobos/archive/v2.066.1.tar.gz"
+    sha1 "58e48b33cffbab4acb5e6d6f376ea209ce8e2114"
   end
 
   resource "tools" do
-    url "https://github.com/D-Programming-Language/tools/archive/v2.066.0.tar.gz"
-    sha1 "03384e9237c778e9afcecd10e756111fd4f323de"
+    url "https://github.com/D-Programming-Language/tools/archive/v2.066.1.tar.gz"
+    sha1 "fc64b35364cf76d7270e4a8fe41203e0b4dde11c"
   end
 
   def install
@@ -41,9 +41,9 @@ class Dmd < Formula
       inreplace conf, /^DFLAGS=.+$/, "DFLAGS=-I#{include}/d2 -L-L#{lib}"
     else
       conf.write <<-EOS.undent
-        [Environment]
-        DFLAGS=-I#{include}/d2 -L-L#{lib}
-        EOS
+      [Environment]
+      DFLAGS=-I#{include}/d2 -L-L#{lib}
+      EOS
     end
 
     make_args.unshift "DMD=#{bin}/dmd"
@@ -57,7 +57,6 @@ class Dmd < Formula
     (include/"d2").install Dir["druntime/import/*"]
     cp_r ["phobos/std", "phobos/etc"], include/"d2"
     lib.install Dir["druntime/lib/*", "phobos/**/libphobos2.a"]
-
 
     resource("tools").stage do
       inreplace "posix.mak", "install: $(TOOLS) $(CURL_TOOLS)", "install: $(TOOLS)"
